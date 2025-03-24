@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run C++",
+            "type": "cppvsdbg", // Use "cppvsdbg" for Windows or "cppdbg" for other OS
+            "request": "launch",
+            "program": "${fileDirname}/main.exe", // Path to compiled executable
+            "args": [], // Optional: Add arguments here
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        }
+    ]
+}
