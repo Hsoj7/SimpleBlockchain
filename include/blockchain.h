@@ -15,3 +15,30 @@ Managing transactions.
 
 Retrieving the latest block.
 */
+#ifndef BLOCKCHAIN_H
+#define BLOCKCHAIN_H
+
+#include <vector>
+#include "Block.h"
+
+class Blockchain {
+private:
+    std::vector<Block> chain;
+    int difficulty;
+    int blockSize;
+    double totalCoins;
+    double minedCoins;
+    std::vector<Transaction> pendingTransactions;
+    double miningReward;
+
+public:
+    Blockchain(int diff, int bSize, double tCoins);
+    void addBlock(Block newBlock);
+    bool isChainValid() const;
+    Block getLatestBlock() const;
+    int getChainLength() const;
+    double getTotalMinedCoins() const;
+    void addTransaction(const Transaction& tx);
+};
+
+#endif

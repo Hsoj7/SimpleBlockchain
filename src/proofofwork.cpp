@@ -11,3 +11,14 @@ Example Methods:
 
 void mineBlock(Block &block, int difficulty).
 */
+
+#include "../include/ProofOfWork.h"
+#include "../include/Crypto.h"
+
+std::string calculateHashWithNonce(const std::string& data, int nonce) {
+    return sha256(data + std::to_string(nonce));
+}
+
+void mineBlock(Block& block, int difficulty) {
+    block.mineBlock(difficulty);
+}

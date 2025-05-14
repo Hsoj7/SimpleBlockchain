@@ -13,3 +13,19 @@ std::string serialize().
 
 bool isValid().
 */
+
+#include "../include/Transaction.h"
+#include "../include/Utils.h"
+
+Transaction::Transaction(const std::string& s, const std::string& r, double amt)
+    : sender(s), recipient(r), amount(amt) {
+    timestamp = getCurrentTimestamp();
+}
+
+std::string Transaction::serialize() const {
+    return sender + recipient + std::to_string(amount) + timestamp;
+}
+
+bool Transaction::isValid() const {
+    return amount >= 0 && !sender.empty() && !recipient.empty();
+}
