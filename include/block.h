@@ -38,6 +38,19 @@ public:
     void mineBlock(int difficulty);
     void addTransaction(const Transaction& tx);
     std::string calculateHash() const;
+
+public:
+    int getIndex() const;
+
+public:
+    // methods for block.getNonce() and block.getTimestamp()
+    int getNonce() const;
+    std::string getTimestamp() const;
+
+public:
+    // method to print the whole history of the block including all transactions
+    void printBlockHistory() const;
 };
+
 
 #endif

@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
     int blockTime = 10;        // 600 is 10 minutes in seconds, Bitcoin-like
     int blockSize = 1024;    // 1048576 is 1 MB, 1024 is 1 kb
     double totalCoins = 2100; // Bitcoin's total supply is 21000000
-    int difficulty = 1;          // Number of leading zeros in hash
+    int difficulty = 5;          // Number of leading zeros in hash
 
     // Parse command-line arguments
     if (!parseArguments(argc, argv, blockTime, blockSize, totalCoins, difficulty)) {
@@ -105,6 +105,7 @@ int main(int argc, char* argv[]) {
                   << "  mine        - Mine a new block\n"
                   << "  status      - Display blockchain status\n"
                   << "  validate    - Validate blockchain integrity\n"
+                  << "  history     - Print the full history of the blockchain\n"
                   << "  exit        - Exit simulation\n"
                   << "Enter command: ";
         std::getline(std::cin, command);
@@ -112,10 +113,21 @@ int main(int argc, char* argv[]) {
         if (command == "mine") {
             // Simulate mining a new block
             std::cout << "Mining new block...\n";
-            Block newBlock = blockchain.getLatestBlock(); // Assumed method
-            newBlock.mineBlock(difficulty);              // Assumed method
-            blockchain.addBlock(newBlock);               // Assumed method
-            std::cout << "Block mined and added to the chain.\n";
+
+
+            Block latestBlock = blockchain.getLatestBlock();
+            Block newBlock(
+                latestBlock.getIndex() + 1,           // next index
+                latestBlock.getHash(),                // previous hash
+                difficulty                            // current difficulty
+                // add other params as needed
+            );
+            // Optionally add transactions here
+            newBlock.mineBlock(difficulty);
+            blockchain.addBlock(newBlock);
+
+            // new print statement that same as below, but including the block hash
+            std::cout << "New block mined with hash: " << newBlock.getHash() << "\n";
         } else if (command == "status") {
             // Display blockchain status
             std::cout << "Blockchain Status:\n"
@@ -130,7 +142,10 @@ int main(int argc, char* argv[]) {
             } else {
                 std::cout << "Blockchain is invalid!\n";
             }
-        } else if (command == "exit") {
+        } else if (command == "history") {
+            blockchain.printBlockchainHistory(); // Assumed method
+        }
+        else if (command == "exit") {
             std::cout << "Exiting simulation.\n";
             break;
         } else {

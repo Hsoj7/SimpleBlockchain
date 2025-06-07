@@ -11,15 +11,25 @@ std::string sha256(const std::string &input).
 */
 
 #include "../include/Crypto.h"
+#include <openssl/sha.h>
 #include <sstream>
 #include <iomanip>
+#include <string>
 
 std::string sha256(const std::string& input) {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, input.c_str(), input.size());
+    SHA256_Final(hash, &sha256);
+
     std::stringstream ss;
-    unsigned long sum = 0;
-    for (char c : input) {
-        sum += static_cast<unsigned char>(c);
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i) {
+        ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
     }
-    ss << std::hex << sum;
     return ss.str();
+}
+
+std::string fakeSha256(const std::string& input) {
+    return "0" + input; // Always valid for difficulty 1
 }

@@ -20,6 +20,7 @@ void mineBlock(int difficulty).
 #include "../include/Crypto.h"
 #include "../include/Utils.h"
 #include <sstream>
+#include <iostream>
 
 Block::Block(int idx, const std::string& prevHash, int diff)
     : index(idx), previousHash(prevHash), nonce(0), difficulty(diff) {
@@ -35,12 +36,20 @@ std::string Block::getPreviousHash() const {
     return previousHash;
 }
 
+int Block::getIndex() const {
+    return index;
+}
+
 void Block::mineBlock(int difficulty) {
     std::string target(difficulty, '0');
     while (hash.substr(0, difficulty) != target) {
         nonce++;
         hash = calculateHash();
+        if (nonce % 100000 == 0) {
+            std::cout << "Mining... nonce: " << nonce << "\r";
+        }
     }
+    std::cout << std::endl;
 }
 
 void Block::addTransaction(const Transaction& tx) {
@@ -54,4 +63,13 @@ std::string Block::calculateHash() const {
         ss << tx.serialize();
     }
     return sha256(ss.str());
+}
+
+// methods for block.getNonce() and block.getTimestamp() 
+int Block::getNonce() const {
+    return nonce;
+}
+
+std::string Block::getTimestamp() const {
+    return timestamp;
 }

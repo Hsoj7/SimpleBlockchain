@@ -131,7 +131,24 @@ This section outlines the specification for the C++ files included in this Bitco
   - Compile all `.cpp` files in the project and link them into a single executable.
 - **Compilation Command**:
   ```bash
-  g++ -c main.cpp Block.cpp Blockchain.cpp Transaction.cpp ProofOfWork.cpp Crypto.cpp Utils.cpp -std=c++11
+  g++ -c main.cpp Block.cpp Blockchain.cpp Transaction.cpp ProofOfWork.cpp Crypto.cpp Utils.cpp -std=c++11 -IC:\Users\josto\vcpkg\installed\x64-windows\include
 - **Linking Command**:
   ```bash
-  g++ main.o Block.o Blockchain.o Transaction.o ProofOfWork.o Crypto.o Utils.o -o blockchain_sim
+  g++ main.o Block.o Blockchain.o Transaction.o ProofOfWork.o Crypto.o Utils.o -o blockchain_sim -LC:\Users\josto\vcpkg\installed\x64-windows\lib -lssl -lcrypto
+- **Running the Program**:
+  ./blockchain_sim
+
+## 16. Installing OpenSSL (First-time setup)
+  1. Install OpenSSL for Windows
+  Use vcpkg (Recommended for C++ projects)
+  git clone https://github.com/microsoft/vcpkg.git
+  .\vcpkg\bootstrap-vcpkg.bat
+
+  2. Install OpenSSL
+  .\vcpkg\vcpkg install openssl:x64-windows
+
+  3. Edit the install locations in item 15. to user's local directory -IC:\Users\josto\vcpkg\installed\x64-windows\include
+
+
+
+  

@@ -18,6 +18,7 @@ void addBlock(Block newBlock).
 
 #include "../include/Blockchain.h"
 #include "../include/Config.h"
+#include <iostream>
 
 Blockchain::Blockchain(int diff, int bSize, double tCoins)
     : difficulty(diff), blockSize(bSize), totalCoins(tCoins), minedCoins(0), miningReward(50.0) {
@@ -59,4 +60,17 @@ double Blockchain::getTotalMinedCoins() const {
 
 void Blockchain::addTransaction(const Transaction& tx) {
     pendingTransactions.push_back(tx);
+}
+
+// method to print the whole history of the blockchain including all block hashes
+void Blockchain::printBlockchainHistory() const {
+    std::cout << "Blockchain History:\n";
+    for (const auto& block : chain) {
+        std::cout << "Block Index: " << block.getIndex() 
+                  << ", Hash: " << block.getHash() 
+                  << ", Previous Hash: " << block.getPreviousHash() 
+                  << ", Nonce: " << block.getNonce() 
+                  << ", Timestamp: " << block.getTimestamp() 
+                  << "\n";
+    }
 }

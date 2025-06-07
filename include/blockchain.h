@@ -39,6 +39,10 @@ public:
     int getChainLength() const;
     double getTotalMinedCoins() const;
     void addTransaction(const Transaction& tx);
+
+public:
+    // method to print the whole history of the blockchain including all block hashes
+    void printBlockchainHistory() const;
 };
 
 #endif
